@@ -1,0 +1,11 @@
+apiVersion: awesome-operator.public.net/v1alpha1
+kind: Bucket
+metadata:
+  labels:
+    app.kubernetes.io/name: awesome-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: bucket-sample
+spec:
+  cloud: gcp
+  fullName: my-demo-bucket-18ab3dc38f4
+  onDeletePolicy: destroy

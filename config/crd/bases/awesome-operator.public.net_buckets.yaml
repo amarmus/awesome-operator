@@ -1,0 +1,73 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.14.0
+  name: buckets.awesome-operator.public.net
+spec:
+  group: awesome-operator.public.net
+  names:
+    kind: Bucket
+    listKind: BucketList
+    plural: buckets
+    singular: bucket
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Bucket is the Schema for the buckets API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: BucketSpec defines the desired state of Bucket
+            properties:
+              cloud:
+                description: Cloud platform
+                enum:
+                - gcp
+                type: string
+              fullName:
+                description: FullName is the cloud storage bucket full name
+                type: string
+              onDeletePolicy:
+                description: OnDeletePolicy defines the behavior when the Deployment/Bucket
+                  objects are deleted
+                enum:
+                - destroy
+                - ignore
+                type: string
+            required:
+            - cloud
+            - fullName
+            - onDeletePolicy
+            type: object
+          status:
+            description: BucketStatus defines the observed state of Bucket
+            properties:
+              createdAt:
+                description: CreatedAt is the cloud storage bucket creation time
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
